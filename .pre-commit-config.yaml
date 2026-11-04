@@ -1,0 +1,68 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    # To upgrade hooks run: `prek autoupdate --freeze`
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=750']
+        exclude: ^uv.lock$
+      - id: check-toml
+      - id: check-yaml
+        args:
+        - --unsafe
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/crate-ci/typos.git
+    rev: 7f9d0819ca1c008ade73f4b41fa9d258d48f605b  # frozen: v1.51.1
+    hooks:
+      - id: typos
+
+  - repo: local
+    hooks:
+      - id: local-ruff-check
+        name: ruff check
+        entry: uvx ruff check --force-exclude --fix --exit-non-zero-on-fix
+        require_serial: true
+        language: unsupported
+        types: [python]
+
+      - id: local-ruff-format
+        name: ruff format
+        entry: uvx ruff format --force-exclude --exit-non-zero-on-format
+        require_serial: true
+        language: unsupported
+        types: [python]
+
+      - id: fast-lint
+        name: check type hints by ty
+        entry: uvx ty check
+        language: system
+        pass_filenames: false
+
+      - id: mypy
+        name: Check type hints by mypy
+        entry: just mypy
+        language: system
+        pass_filenames: false
+        groups: [check]
+        stages: [manual]
+
+      - id: build
+        name: Build sdist by uv
+        entry: uv build
+        language: system
+        pass_filenames: false
+        groups: [check]
+        stages: [manual]
+
+      - id: twine
+        name: Check sdist by twine
+        entry: uvx twine check dist/*
+        language: system
+        pass_filenames: false
+        priority: 20
+        groups: [check]
+        stages: [manual]

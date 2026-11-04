@@ -1,0 +1,33 @@
+[project]
+name = "uv-mirror"
+dynamic = ["version"]
+description = "Make it easy to setup uv mirror"
+authors = [{name = "Waket Zheng", email = "waketzheng@gmail.com"}]
+dependencies = [
+    "asynctor>=0.16.0",
+    "pip-conf-mirror>=0.9.3",
+    "typer>=0.27.3",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[project.scripts]
+uv-mirror = "uv_mirror.cli:main"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.version]
+path = "src/uv_mirror/__init__.py"
+
+[dependency-groups]
+dev = [
+    "coverage>=7.17.1",
+    "pytest>=9.2.0",
+    "pytest-mock>=3.17.0",
+]
