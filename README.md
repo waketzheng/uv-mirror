@@ -13,4 +13,4 @@ uvx --index https://mirrors.aliyun.com/pypi/simple uv-mirror qh
 # 更换为腾讯源
 uvx uv-mirror tx
 ```
-*注：uv-mirror --list列出的国内源，目前只有清华源跟官方的pypi源操持一致，会往uv.lock中写入upload-time*
+*注：uv-mirror --list列出的国内源，目前只有清华源跟官方的pypi源保持一致，会往uv.lock中写入upload-time*

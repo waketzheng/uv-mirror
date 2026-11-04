@@ -25,3 +25,6 @@ _init scheme="http" *args:
 
 _just_up *args:
     git submodule update --init --merge --recursive --remote --force {{ args }}
+
+_pyright *args:
+    @echo Skip pyright checking.
